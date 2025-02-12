@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>التقاط وإرسال صورة</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background-color: #0056b3; }
+    select { padding: 10px; margin: 10px; font-size: 16px; }
+    #preview-container img {
+      width: 300px;
+      border: 3px solid #ddd;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>التقاط صورة لعقد العمل وإرسالها</h2>
+
+  <!-- خيارات اختيار المجموعة، الفinca والعامل -->
+  <label for="group">اختر المجموعة:</label>
+  <select id="group">
+    <option value="-1002408201424">AGRI STRATEGIE</option>
+    <option value="-1000987654321">AGRI SUPPORT</option>
+    <option value="-1002408201424">BEST PROFIL</option>
+    <option value="-1002233445566">AGRICONOMIE</option>
+    <option value="-1003344556677">FARM LABOUR</option>
+  </select>
+  <br>
+  <label for="finca">اختر FINCA:</label>
+  <select id="finca">
+    <option value="FINCA 1">FINCA 1</option>
+    <option value="FINCA 2">FINCA 2</option>
+    <option value="FINCA 3">FINCA 3</option>
+    <!-- يمكنك إضافة المزيد -->
+  </select>
+  <br>
+  <label for="worker">اختر العامل:</label>
+  <select id="worker">
+    <!-- يتم تعبئته ديناميكيًا أو يمكنك إضافة خيارات ثابتة -->
+    <option value="عامل 1">عامل 1</option>
+    <option value="عامل 2">عامل 2</option>
+    <option value="عامل 3">عامل 3</option>
+  </select>
+  <br>
+  <button id="openCamera">📷 فتح الكاميرا</button>
+
+  <!-- منطقة المعاينة للصور الملتقطة -->
+  <div id="preview-container"></div>
+
+  <script>
+    // عند النقر على زر فتح الكاميرا، يتم فتح نافذة منبثقة جديدة تحتوي على الكاميرا
+    document.getElementById('openCamera').addEventListener('click', function(){
+      // يمكنك تعديل أبعاد النافذة حسب الحاجة
+      const popup = window.open('camera.html', 'Camera', 'width=800,height=600');
+      // في حال رغبت في تمرير بيانات من الصفحة الرئيسية للنافذة (مثل اختيار العامل أو FINCA) يمكنك إضافتها عبر query parameters
+    });
+    
+    // دالة لاستقبال بيانات الصورة (Base64) من النافذة المنبثقة
+    function receiveImage(imageDataUrl) {
+      const previewContainer = document.getElementById('preview-container');
+      previewContainer.innerHTML = '<img src="' + imageDataUrl + '" alt="صورة الملتقطة">';
+      // يمكنك هنا إضافة إجراءات إضافية، مثل إرسال الصورة إلى تلغرام
+    }
+    // تأكد من جعل الدالة متاحة للنافذة المنبثقة
+    window.receiveImage = receiveImage;
+  </script>
+</body>
+</html>
